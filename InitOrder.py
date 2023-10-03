@@ -14,14 +14,14 @@ def get_party_initiative(characters):
     return init_list
 
 
-def generate_monster_initiative(monster, quantity, modifier, start_count=0):
+def generate_monster_initiative(monster, quantity, modifier, max_hp, start_count=0):
     # generates a list of numbered monsters and rolls their initiative, returns list of tuples
     # modifier is the initiave modifier for monster type
     # start count is the numbered suffix for each monster, can be used when adding additional monsters to an encounter
     init_list = []
     for i in range(start_count, quantity+start_count):
         initiative = math.ceil(20*random.random() + modifier)
-        init_list.append((monster + ' ' + str(i + 1), initiative))
+        init_list.append((monster + ' ' + str(i + 1), initiative, max_hp))
     return init_list
 
 
@@ -37,7 +37,10 @@ def turn_order_print(array):
     # prints the entire list of entities ordered by initiative to the console
     # can then be copied to txt file to track combat
     for i in array:
-        print(i[0] + ': ' + str(i[1]))
+        if len(i) == 2:
+            print(i[0] + ': ' + str(i[1]))
+        elif len(i) == 3:
+            print(i[0] + ': ' + str(i[1]) + str(f" {i[2]}/{i[2]}"))
 
 
 # print(get_party_initiative(chars))
