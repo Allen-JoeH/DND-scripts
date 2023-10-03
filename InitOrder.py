@@ -43,15 +43,30 @@ def turn_order_print(array):
             print(i[0] + ': ' + str(i[1]) + str(f" {i[2]}/{i[2]}"))
 
 
+def turn_order_print_to_txt(array, file):
+    # prints the entire list of entities ordered by initiative to a given text file
+    with open(file, "w") as output_file:
+        for i in array:
+            if len(i) == 2:
+                output_file.write(i[0] + ': ' + str(i[1]) + "\n")
+            elif len(i) == 3:
+                output_file.write(i[0] + ': ' + str(i[1]) +
+                                  str(f" {i[2]}/{i[2]}") + "\n")
+        output_file.close()
+
+
+# TEST DATA
 # print(get_party_initiative(chars))
-# print(generate_monster_initiative('zombie',5,-2))
-skeles = generate_monster_initiative('Skeleton archer', 2, 2, 8)
+# zombies = generate_monster_initiative('zombie', 5, -2, 28)
+skeles = generate_monster_initiative('Skeleton archer', 8, 2, 8, 2)
 # print(skeles)
 # print(zombies)
-# turn_order_print(turn_order(get_party_initiative(chars),zombies))
-turn_order_print(skeles)
+full_init_order = turn_order(get_party_initiative(chars), skeles)
+# turn_order_print(turn_order(skeles))
+turn_order_print_to_txt(full_init_order, "DNDscripts/Order_of_battle.txt")
 
 # TODO
-# add HP parameter for monsters to be displayed after init, rather than writing manually in txt file
-# add option to print ordered inits in separate txt file
+# add HP parameter for monsters to be displayed after init, rather than writing manually in txt file ||| DONE
+# add option to print ordered inits in separate txt file ||| DONE
 # potentially add functionality to insert new units to text file if generated mid encounter
+# Maybe add gui functionality via Django or Flask, may require a SQL DB
