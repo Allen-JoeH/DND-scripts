@@ -2,6 +2,7 @@ import math
 import statistics
 import random
 
+
 def travel_time(miles, pace, party_speed_modifier=1):
     match pace:
         case "fast":
@@ -29,49 +30,52 @@ def travel_distance(time, pace, party_speed_modifier=1):
 
 # print(travel_distance(8,"fast"))
 
+
 def roll_dice(die_size):
     return math.ceil(random.random() * die_size)
 
-def check(DC):
-    roll=roll_dice(20)
-    # return f'Succeeds ({str(roll)})' if roll>+DC else f'Fails ({str(roll)})'
+
+def check(DC, modifier=0):
+    roll = roll_dice(20) + modifier
     return True if roll >= DC else False
 
-terrain_type = {
-
-}
 
 def exhaustion(hours_over_8):
-    checks = [10 + i for i in range(hours_over_8-8)] if hours_over_8 > 8 else None
+    checks = [10 + i for i in range(hours_over_8-8)
+              ] if hours_over_8 > 8 else None
     return checks
 
 
-
-def travel_summary(pace,control_param,distance=None,time=None,difficult_terrain=1,danger_modifier=0):
+def travel_summary(pace, control_param, distance=None, time=None, difficult_terrain=1, danger_modifier=0):
     # Objective of travel day: provide travel time or distance dpending on input, generate a variable DC check for chance of encounter
     # Difficult_terrain should be set to 1 for regular terrain or 2 for difficult terrain. Can be higher for dangerous terrain or lower for more forgiving terrain
     if control_param == "time":
-        distance_travelled = travel_distance(time,pace,party_speed_modifier=1) / difficult_terrain
+        distance_travelled = travel_distance(
+            time, pace, party_speed_modifier=1) / difficult_terrain
         hours_travelling = time
     else:
         distance_travelled = distance
-        hours_travelling = travel_time(distance,pace,party_speed_modifier=1)* difficult_terrain
-    
+        hours_travelling = travel_time(
+            distance, pace, party_speed_modifier=1) * difficult_terrain
+
     exhaustion_checks = exhaustion(hours_travelling)
     match pace:
         case "fast":
             hour_mod = 1.3
+        case "normal":
+            hour_mod = 1
         case "slow":
             hour_mod = 0.5
     encounter_chance = math.floor(hours_travelling*hour_mod - danger_modifier)
     return {
-        "pace" : pace,
-        "miles travelled" : distance_travelled,
-        "hours travelling" : hours_travelling,
-        "terrain difficulty" : "regular" if difficult_terrain <= 1 else "difficult",
-        "exhaustion checks needed" : exhaustion_checks,
-        "encounter chance" : encounter_chance,
-            }
+        "pace": pace,
+        "miles travelled": distance_travelled,
+        "hours travelling": hours_travelling,
+        "terrain difficulty": "regular" if difficult_terrain <= 1 else "difficult",
+        "exhaustion checks needed": exhaustion_checks,
+        "encounter chance": encounter_chance,
+    }
+
 
 def combine_travel(*args):
     pace = arg[0]["pace"]
@@ -84,26 +88,35 @@ def combine_travel(*args):
             break
         if arg["pace"] != pace:
             pace = "varied"
-    
+
     exhaustion_checks = exhaustion(hours_travelling_total)
-    averaged_encounter_chance = math.ceil(statistics.mean([arg["encounter chance"] for arg in args]))
+    averaged_encounter_chance = math.ceil(
+        statistics.mean([arg["encounter chance"] for arg in args]))
     return {
-        "pace" : pace,
-        "miles travelled" : distance_travelled_total,
-        "hours travelling" : hours_travelling_total,
-        "terrain difficulty" : terrain_difficulty,
-        "exhaustion checks needed" : exhaustion_checks,
-        "encounter chance" : averaged_encounter_chance,
+        "pace": pace,
+        "miles travelled": distance_travelled_total,
+        "hours travelling": hours_travelling_total,
+        "terrain difficulty": terrain_difficulty,
+        "exhaustion checks needed": exhaustion_checks,
+        "encounter chance": averaged_encounter_chance,
     }
 
-def encounter(travel_obj):
-    if check(travel_obj["encounter chance"]):
-        return "Random Encounter!"
+
+def encounter(travel_obj, modifier=0):
+    if check(travel_obj["encounter chance"], modifier):
+        return "No encounter!"
     else:
-        return "No "
+        return "Random encounter!"
 
-days_travel = travel_summary("fast","distance",6)
 
+days_travel = travel_summary("fast", "distance", 14)
+
+# days_fast = travel_summary("normal", "distance", 14)
 # print(days_travel)
 
-print(travel_time(8, "fast", party_speed_modifier=2))
+# print(travel_time(14, "fast", party_speed_modifier=1))
+
+print(encounter(days_travel))
+
+# TODO
+#  add time of day to encounter chance
