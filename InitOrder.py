@@ -21,7 +21,8 @@ def generate_monster_initiative(monster, quantity, modifier, max_hp, start_count
     init_list = []
     for i in range(start_count, quantity+start_count):
         initiative = math.ceil(20*random.random() + modifier)
-        init_list.append((monster + ' ' + str(i + 1), initiative, max_hp))
+        init_list.append((monster + ' ' + str(i + 1) if quantity >
+                         1 else monster, initiative, max_hp))
     return init_list
 
 
@@ -56,14 +57,20 @@ def turn_order_print_to_txt(array, file):
 
 
 # TEST DATA
-# print(get_party_initiative(chars))
-# zombies = generate_monster_initiative('zombie', 5, -2, 28)
-skeles = generate_monster_initiative('Skeleton archer', 8, 2, 8, 2)
+# # print(get_party_initiative(chars))
+# zombies = generate_monster_initiative('zombie', 4, -2, 28)
+# skeles = generate_monster_initiative('Skeleton archer', 2, 2, 13)
+# wight_arch = generate_monster_initiative('wight (archer)', 1, 3, 45)
+ghouls = generate_monster_initiative('ghoul', 4, 4, 22)
+ghasts = generate_monster_initiative('ghast', 1, 4, 36)
+
 # print(skeles)
 # print(zombies)
-full_init_order = turn_order(get_party_initiative(chars), skeles)
+print(ghasts)
+full_init_order = turn_order(
+    get_party_initiative(chars), ghouls, ghasts)
 # turn_order_print(turn_order(skeles))
-turn_order_print_to_txt(full_init_order, "DNDscripts/Order_of_battle.txt")
+# turn_order_print_to_txt(full_init_order, "DNDscripts/Order_of_battle.txt")
 
 # TODO
 # add HP parameter for monsters to be displayed after init, rather than writing manually in txt file ||| DONE
