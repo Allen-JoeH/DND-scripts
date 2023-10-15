@@ -77,3 +77,4 @@ full_init_order = turn_order(
 # add option to print ordered inits in separate txt file ||| DONE
 # potentially add functionality to insert new units to text file if generated mid encounter
 # Maybe add gui functionality via Django or Flask, may require a SQL DB
+# Add option to use object in monster statblock over typing manually
