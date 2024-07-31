@@ -101,8 +101,22 @@ def combine_travel(*args):
         "encounter chance": averaged_encounter_chance,
     }
 
+# determines whether a random encounter occurs
 
-def encounter(travel_obj, modifier=0):
+
+def encounter(travel_obj: object, time_of_day=None, modifier=0):
+    # uses time of day to adjust modifier
+    match time_of_day:
+        case "daytime":  # travelling throughout the day, of a range of daylight hours
+            modifier += 0
+        case "morning":
+            modifier -= 3
+        case "afternoon":
+            modifier -= 1
+        case "evening":
+            modifier += 2
+        case "night":
+            modifier += 5
     if check(travel_obj["encounter chance"], modifier):
         return "No encounter!"
     else:
@@ -110,13 +124,14 @@ def encounter(travel_obj, modifier=0):
 
 
 days_travel = travel_summary("fast", "distance", 14)
-
+# print(days_travel)
 # days_fast = travel_summary("normal", "distance", 14)
 # print(days_travel)
 
 # print(travel_time(14, "fast", party_speed_modifier=1))
 
-print(encounter(days_travel))
+# print(encounter(days_travel))
 
 # TODO
 #  add time of day to encounter chance
+# import encounter generator to create random encounters

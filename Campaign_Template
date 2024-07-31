@@ -1,0 +1,15 @@
+from InitOrder import print_encounter_init
+from Travel import travel_summary, encounter
+from EncounterGenerator import generate_encounter
+import EncounterRating
+import Campaign_Monsters
+# Set chars to be used
+active_chars = ["Athos", "Porthos", "Aramis"]
+
+# sets library of monsters to be used
+monster_library = Campaign_Monsters.monsters_library
+
+bandits = generate_encounter([2, 2, 2], "Hard", 10,
+                             monster_library, Campaign_Monsters.bandit_patrol)
+print_encounter_init("DNDscripts/Order_of_battle.txt",
+                     active_chars, bandits)
