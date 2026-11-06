@@ -89,7 +89,13 @@ bandit_patrol = [
 
 encounters = [hobgoblin_patrol, bandit_patrol]
 
-# print(list_of_lists_number([1], [2], [3]))
-# generate_encounter([4, 4, 4, 4], "Hard", 10, hobgoblin_patrol, bandit_patrol)
+test = generate_encounter([4, 4, 4, 4], "Hard", 10, monsters_library, hobgoblin_patrol, bandit_patrol)
+# test = generate_encounter([4, 4, 4, 4], "Hard", 10, monsters_library, encounters)
 
-generate_encounter([4, 4, 4, 4], "Hard", 10, monsters_library, bandit_patrol)
+# print(test)
+
+# print(generate_encounter([4, 4, 4, 4], "Hard",
+#       10, monsters_library, bandit_patrol, hobgoblin_patrol))
+
+# print(generate_encounter([4,4,4,4], "Hard", 5, monsters_library, bandit_patrol))
+

@@ -1,0 +1,37 @@
+from InitOrder import print_encounter_init, turn_order, turn_order_print_to_txt, add_to_turn_order, generate_monster_initiative, get_party_initiative
+from Travel import travel_summary, encounter
+from EncounterGenerator import generate_encounter
+import EncounterRating
+import Campaign_Monsters
+import magic_item_generator
+# Set chars to be used at start of session
+active_chars = ["MG", "Dallista", "Adobe","Siren","Amy","Paddy"]
+fight = ["Siren", "Fredney"]
+
+# sets library of monsters to be used
+monster_library = Campaign_Monsters.monsters_library
+
+deathlock = generate_monster_initiative("deathlock", 1, 2, 36)
+wight_heavy = generate_monster_initiative('Heavy Wight', 1, 1, 50)
+wight_arch = generate_monster_initiative('wight (archer)', 1, 3, 45)
+skele_inf = generate_monster_initiative('Skeleton Infantry', 1, 0, 13)
+skeles = generate_monster_initiative('skeleton', 1, 2, 13)
+banshee = generate_monster_initiative('banshee', 1, 2, 58)
+banshee = generate_monster_initiative('ghost', 1, 1, 45)
+
+# turn_order_print_to_txt(turn_order(get_party_initiative(fight)), "Order_of_battle_2.txt")
+# turn_order_print_to_txt(turn_order(get_party_initiative(active_chars), deathlock), "Order_of_battle_2.txt")
+add_to_turn_order(skele_inf, "Order_of_battle_2.txt")
+add_to_turn_order(skeles, "Order_of_battle_2.txt")
+
+
+
+# bandits = generate_encounter([2, 2, 2], "Hard", 10,
+#                              monster_library, Campaign_Monsters.bandit_patrol)
+# print_encounter_init("DNDscripts/Order_of_battle.txt",
+#                      active_chars, bandits)
+
+# generate_encounter([4, 4, 4, 4], "Hard", 10, hobgoblin_patrol, bandit_patrol)
+
+# turn_order_print_to_txt(turn_order(get_party_initiative(active_chars), ghouls, ghast), "Order_of_battle_2.txt")
+

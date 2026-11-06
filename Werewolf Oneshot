@@ -1,0 +1,20 @@
+from InitOrder import print_encounter_init, turn_order, turn_order_print_to_txt, generate_monster_initiative, get_party_initiative
+from Travel import travel_summary, encounter
+from EncounterGenerator import generate_encounter
+import EncounterRating
+import Campaign_Monsters
+# Set chars to be used at start of session
+active_chars = ["Ronald", "Ludwig", "Amy", "Sizzle"]
+
+# sets library of monsters to be used
+monster_library = Campaign_Monsters.monsters_library
+
+# bandits = generate_encounter([2, 2, 2], "Hard", 10,
+#                              monster_library, Campaign_Monsters.bandit_patrol)
+
+werewolves = generate_monster_initiative("werewolf", 2, 1, 58)
+
+# turn_order_print_to_txt(turn_order(
+#     get_party_initiative(active_chars), werewolves), "DNDscripts/Order_of_battle.txt")
+
+# generate_encounter([4, 4, 4, 4], "Hard", 10, hobgoblin_patrol, bandit_patrol)

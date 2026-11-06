@@ -1,0 +1,11 @@
+Amy: 20
+Fredney: 17
+MG: 16
+Siren: 10
+Adobe: 10
+Dallista: 9
+
+Heavy Wight: 8 50/50
+wight (archer): 10 45/45
+Skeleton Infantry: 3 13/13
+skeleton: 12 13/13

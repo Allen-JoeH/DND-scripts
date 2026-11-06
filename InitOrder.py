@@ -1,7 +1,7 @@
 import random
 import math
 
-chars = ['Adobe', 'Dalista', 'Mutinous Greg']
+chars = ['Adobe', 'Dalista', 'Mutinous Greg', 'Animere', 'Siren']
 # chars_2 = ['Piereo', 'Preston', 'Chelydra']
 # the list of player characters in the session
 
@@ -38,10 +38,6 @@ def generate_encounter_init(encounter: list):
     return init_list
 
 
-bandit_encounter = [{"name": "Bandit Captain", "quantity": 1, "init modifier": 2, "max hp": 60},
-                    {"name": "Bandit Heavy", "quantity": 4, "init modifier": 2, "max hp": 23}]
-
-
 def turn_order(*initiatives):
     # takes a number of lists containing tuples of form (entity, iniative) and orders them by initiative
     all_inits = []
@@ -72,21 +68,40 @@ def turn_order_print_to_txt(array, file):
         output_file.close()
 
 
+def add_to_turn_order(array, file):
+    with open(file, "a") as output_file:
+        for monster in array:
+            if len(monster) == 2:
+                output_file.write(monster[0] + ': ' + str(monster[1]) + "\n")
+            elif len(monster) == 3:
+                output_file.write(monster[0] + ': ' + str(monster[1]) + str(f" {monster[2]}/{monster[2]}") + "\n")
+        output_file.close()
+        
 def print_encounter_init(file, party, encounter):
     turn_order_print_to_txt(turn_order(
         get_party_initiative(party), generate_encounter_init(encounter)), file)
 
 # TEST DATA
+
+# Ram campaign
+
+# thugs = generate_monster_initiative('thug', 3, 0, 32)
+# turn_order_print_to_txt(soldiers, 'DNDscripts/Order_of_battle.txt')
+
 # # # print(get_party_initiative(chars))
 # zombies = generate_monster_initiative('zombie', 4, -2, 28)
-# skele_inf = generate_monster_initiative('Skeleton Infantry', 4, 0, 15)
-# wight_heavy = generate_monster_initiative('Heavy Wight', 2, 1, 50)
+# skele_inf = generate_monster_initiative('Skeleton Infantry', 2, 0, 13)
+wight_heavy = generate_monster_initiative('Heavy Wight', 3, 1, 50)
 # zombies_2 = generate_monster_initiative('zombie', 6, -2, 28)
-# skeles = generate_monster_initiative('Skeletons', 2, 2, 13)
-# wight_arch = generate_monster_initiative('wight (archer)', 2, 3, 40)
+# skeles = generate_monster_initiative('skeleton', 12, 2, 13)
+# wight_arch = generate_monster_initiative('wight (archer)', 1, 3, 45)
 # ghouls = generate_monster_initiative('ghoul', 4, 4, 22)
 # ghasts = generate_monster_initiative('ghast', 1, 4, 36)
-
+# darvid = generate_monster_initiative('Darvid', 1, 2, 60)
+# banshee = generate_monster_initiative('banshee', 1, 2, 58)
+# shadows = generate_monster_initiative('shadow', 3, 2, 16)
+# turn_order_print_to_txt(turn_order(get_party_initiative(chars), darvid, skele_inf, skeles,),"DNDscripts/Order_of_battle.txt")
+add_to_turn_order(turn_order(wight_heavy), "Order_of_battle.txt")
 
 # One-Shot
 # spider_bait = ['Amy', 'Chuck', 'Flim', 'Octavian', 'LF', 'LC']
@@ -132,7 +147,7 @@ def print_encounter_init(file, party, encounter):
 # soldiers = generate_monster_initiative('Soldier', 6, 2, 28)
 # castellan = generate_monster_initiative('Castellan', 1, 0, 67)
 # turn_order_print_to_txt(turn_order(party_init, generate_encounter_init(
-#     bandit_encounter)), "DNDscripts/Order_of_battle.txt")
+#     bandit_encounter)), "Order_of_battle.txt")
 
 # print(skeles)
 # print(zombies)
@@ -156,3 +171,4 @@ def print_encounter_init(file, party, encounter):
 # Add option to use object in monster statblock over typing manually
 
 # print_encounter_init("DNDscripts/Order_of_battle.txt", chars, bandit_encounter)
+

@@ -1,6 +1,7 @@
 import math
 import statistics
 import random
+import RandomEncounters
 
 
 def travel_time(miles, pace, party_speed_modifier=1):
@@ -118,20 +119,29 @@ def encounter(travel_obj: object, time_of_day=None, modifier=0):
         case "night":
             modifier += 5
     if check(travel_obj["encounter chance"], modifier):
-        return "No encounter!"
+        fight = roll_dice(20)
+        if fight >= 12:
+            return "Combat Encounter"
+        else:
+            return RandomEncounters.random_encounter(RandomEncounters.encounters)
+
     else:
-        return "Random encounter!"
+        return "No encounter!"
 
 
-days_travel = travel_summary("fast", "distance", 14)
+
+days_travel = travel_summary("fast", "time", time=8, danger_modifier=2)
 # print(days_travel)
-# days_fast = travel_summary("normal", "distance", 14)
+# days_fast = travel_summary("normal", "distance", 12)
 # print(days_travel)
 
 # print(travel_time(14, "fast", party_speed_modifier=1))
 
-# print(encounter(days_travel))
+print(encounter(days_travel, time_of_day="daytime", modifier=0))
 
 # TODO
 #  add time of day to encounter chance
 # import encounter generator to create random encounters
+
+
+
